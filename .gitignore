@@ -22,3 +22,5 @@ erl_crash.dump
 # Ignore package tarball (built via "mix hex.build").
 racket-*.tar
 
+# Ignore packaged executable (built via "mix escript.build").
+/racket
