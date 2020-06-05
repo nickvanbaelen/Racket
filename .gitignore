@@ -24,3 +24,6 @@ racket-*.tar
 
 # Ignore packaged executable (built via "mix escript.build").
 /racket
+
+# Ignore generated mix dependencies lock file.
+mix.lock
