@@ -1,6 +1,6 @@
-defmodule RacketTest do
+defmodule Racket.Application.Test do
   use ExUnit.Case
-  doctest Racket
+  doctest Racket.Application
 
   test "greets the world" do
     assert Racket.hello() == :world
