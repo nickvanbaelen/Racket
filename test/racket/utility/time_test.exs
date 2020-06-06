@@ -1,8 +1,8 @@
 defmodule Racket.Utility.Time.Test do
+  import Racket.Utility.Time
+
   use ExUnit.Case
   doctest Racket.Utility.Time
-
-  import  Racket.Utility.Time
 
   test "Convert seconds to milliseconds" do
     assert 1000   == to_milliseconds(1)

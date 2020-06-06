@@ -5,10 +5,18 @@ defmodule Racket.Gateway.ByBit.Test do
   import Racket.Gateway.ByBit
   import Racket.Utility.Time
 
-  test "Request server timestamps" do
-    server_time = timestamp()
-    local_time = local_time()
+  describe "Public" do
+    test "timestamp" do
+      server_time = timestamp()
+      local_time = local_time()
 
-    assert Kernel.abs(server_time - local_time) < 1000
+      assert Kernel.abs(server_time - local_time) < 1000
+    end
+  end
+
+  describe "Private" do
+    test "wallet_balance" do
+      IO.inspect(wallet_balance("BTC"))
+    end
   end
 end
