@@ -14,4 +14,7 @@ defmodule Racket.Interface.Gateway.Private do
   Returns the users wallet balance
   """
   @callback wallet_balance(String.t) :: map()
+  # TODO: Make 'coin' a typed input parameter (using https://hex.pm/packages/enum_type?)
+  #       Implementation of the enum should also be a behaviour (since different gateways
+  #       can accept different input values)... Is this possbile?
 end
