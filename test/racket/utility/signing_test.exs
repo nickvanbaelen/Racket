@@ -10,8 +10,8 @@ defmodule Racket.Utility.Signing.Test do
 
   def bybit_example_headers do
     %{
-      api_key: "YCPQDTAXIJPAirXYYz",
       coin: "BTC",
+      api_key: "YCPQDTAXIJPAirXYYz",
       recv_window: 120000,
       timestamp: 1591452328856
     }

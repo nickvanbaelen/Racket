@@ -1,7 +1,6 @@
 defmodule Racket.Utility.Signing do
   @spec sign(String.t, map()) :: map()
   def sign(key, headers) do
-    #TODO: Order headers alphabetically
     Map.put_new(headers, :sign, hmac_sha256(key, payload(headers)))
   end
 
