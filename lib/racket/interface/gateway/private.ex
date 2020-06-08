@@ -11,6 +11,16 @@ defmodule Racket.Interface.Gateway.Private do
   @callback url :: String.t
 
   @doc """
+  API key defining the private endpoint to send the requests to
+  """
+  @callback api_key :: String.t
+
+  @doc """
+  Private key used to sign messages in order to authenticate to the private endpoint
+  """
+  @callback private_key :: String.t
+
+  @doc """
   Returns the users wallet balance
   """
   @callback wallet_balance(String.t) :: map()
