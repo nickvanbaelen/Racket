@@ -13,6 +13,17 @@ defmodule Racket.Mixin.Gateway.Private do
                                                                         })))
         |> handle_response!
       end
+
+      @spec submit(String.t, map()) :: map()
+      defp submit(endpoint, params) do
+        url() <> endpoint
+        |> HTTPoison.post(Poison.encode!(sign(private_key(), Map.merge(params, %{
+                                                                                  api_key: api_key(),
+                                                                                  timestamp: local_time()
+                                                                                }))),
+                          ["Content-Type": "application/json"])
+        |> handle_response!
+      end
     end
   end
 end
