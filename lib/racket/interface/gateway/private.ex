@@ -27,4 +27,9 @@ defmodule Racket.Interface.Gateway.Private do
   # TODO: Make 'coin' a typed input parameter (using https://hex.pm/packages/enum_type?)
   #       Implementation of the enum should also be a behaviour (since different gateways
   #       can accept different input values)... Is this possbile?
+
+  @doc """
+  Places a market order on the specified instrument
+  """
+  @callback place_market_order(String.t, String.t, integer(), String.t) :: map()
 end

@@ -23,4 +23,16 @@ defmodule Racket.Gateway.ByBit.Private do
     |> Map.get("result")
     |> Map.get(coin)
   end
+
+  @impl Racket.Interface.Gateway.Private
+  def place_market_order(side, symbol, amount, timespan) do
+    submit("/order/create", %{
+                              side: side,
+                              symbol: symbol,
+                              order_type: "Market",
+                              qty: amount,
+                              time_in_force: timespan
+                            })
+    |> Map.get("result")
+  end
 end
