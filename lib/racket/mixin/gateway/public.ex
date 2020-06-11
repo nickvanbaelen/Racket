@@ -9,6 +9,13 @@ defmodule Racket.Mixin.Gateway.Public do
         |> HTTPoison.get()
         |> handle_response!
       end
+
+      @spec request(String.t, map()) :: map()
+      defp request(endpoint, params) do
+        url() <> endpoint
+        |> HTTPoison.get(["Content-Type": "application/json"], params: params)
+        |> handle_response!
+      end
     end
   end
 end
