@@ -16,4 +16,11 @@ defmodule Racket.Gateway.ByBit.Public do
     |> to_milliseconds
     |> Kernel.trunc
   end
+
+  @impl Racket.Interface.Gateway.Public
+  def ticker(symbol) do
+    request("/tickers", %{ symbol: symbol })
+    |> Map.get("result")
+    |> (fn([ticker]) when is_map(ticker) -> ticker end).()
+  end
 end

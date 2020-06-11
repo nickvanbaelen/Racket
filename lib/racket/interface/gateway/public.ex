@@ -14,4 +14,9 @@ defmodule Racket.Interface.Gateway.Public do
   Returns the server time in milliseconds
   """
   @callback timestamp :: integer
+
+  @doc """
+  Returns the ticker info for a specific currency pair
+  """
+  @callback ticker(String.t) :: map()
 end
