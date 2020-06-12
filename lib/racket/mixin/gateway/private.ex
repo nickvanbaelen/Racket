@@ -4,7 +4,7 @@ defmodule Racket.Mixin.Gateway.Private do
       use Racket.Interface.Gateway.Private
 
       @spec request(String.t, map()) :: map()
-      defp request(endpoint, params) do
+      defp request(endpoint, params \\ %{}) do
         url() <> endpoint
         |> HTTPoison.get(["Content-Type": "application/json"],
                          params: sign(private_key(), Map.merge(params, %{

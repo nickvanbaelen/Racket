@@ -21,15 +21,31 @@ defmodule Racket.Interface.Gateway.Private do
   @callback private_key :: String.t
 
   @doc """
-  Returns the users wallet balance
+  Returns the users account balance for the specified currency
   """
-  @callback wallet_balance(String.t) :: map()
-  # TODO: Make 'coin' a typed input parameter (using https://hex.pm/packages/enum_type?)
+  @callback account_balance(String.t) :: map()
+  # TODO: Make 'currency' a typed input parameter (using https://hex.pm/packages/enum_type?)
   #       Implementation of the enum should also be a behaviour (since different gateways
   #       can accept different input values)... Is this possbile?
 
   @doc """
-  Places a market order on the specified instrument
+  Returns the users account leverage settings for each currency pair
+  """
+  @callback account_leverage() :: map()
+
+  @doc """
+  Sets the users account leverage for the specified currency pair
+  """
+  @callback account_leverage(String.t, float()) :: map()
+
+  @doc """
+  Places a market order on the specified currency pair
   """
   @callback place_market_order(String.t, String.t, integer(), String.t) :: map()
+
+  # TODO
+  # @doc """
+  # Places a limit order on the specified currency pair
+  # """
+  # @callback place_order_limit(String.t, String.t, integer(), integer(), String.t) :: map()
 end
