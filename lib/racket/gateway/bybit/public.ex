@@ -1,6 +1,8 @@
 defmodule Racket.Gateway.ByBit.Public do
   import Racket.Gateway.ByBit
+  import Racket.Gateway.ByBit.Spec
   import Racket.Utility.Time
+  import Racket.Utility.Spec
 
   # INTERFACE IMPLEMENTATION
   use Racket.Mixin.Gateway.Public
@@ -18,9 +20,10 @@ defmodule Racket.Gateway.ByBit.Public do
   end
 
   @impl Racket.Interface.Gateway.Public
-  def ticker(symbol) do
-    request("/tickers", %{ symbol: symbol })
+  def ticker(currency_pair) do
+    request("/tickers", %{ symbol: is_valid_currency_pair!(currency_pair) })
     |> Map.get("result")
-    |> (fn([ticker]) when is_map(ticker) -> ticker end).()
+    |> is_one_element_list!()
+    |> Enum.at(0)
   end
 end

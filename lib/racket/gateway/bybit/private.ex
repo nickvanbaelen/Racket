@@ -1,5 +1,6 @@
 defmodule Racket.Gateway.ByBit.Private do
   import Racket.Gateway.ByBit
+  import Racket.Gateway.ByBit.Spec
   import Racket.Utility.Signing
   import Racket.Utility.Time
 
@@ -19,7 +20,7 @@ defmodule Racket.Gateway.ByBit.Private do
 
   @impl Racket.Interface.Gateway.Private
   def account_balance(currency) do
-    request("/v2/private/wallet/balance", %{coin: currency})
+    request("/v2/private/wallet/balance", %{coin: is_valid_currency!(currency)})
     |> Map.get("result")
     |> Map.get(currency)
   end
@@ -30,21 +31,22 @@ defmodule Racket.Gateway.ByBit.Private do
     |> Map.get("result")
   end
 
+  #TODO: Use fspec instead of validating parameters in function code
   @impl Racket.Interface.Gateway.Private
-  def account_leverage(symbol, amount) do
+  def account_leverage(currency_pair, amount) do
     submit("/user/leverage/save", %{
-                                     symbol: symbol,
-                                     leverage: amount
+                                     symbol: is_valid_currency_pair!(currency_pair),
+                                     leverage: is_valid_leverage!(amount, currency_pair)
                                    })
     |> Map.get("result")
   end
 
   @impl Racket.Interface.Gateway.Private
-  def place_market_order(side, symbol, amount, timespan) do
+  def place_market_order(side, currency_pair, amount, timespan) do
     submit("/v2/private/order/create", %{
-                                          side: side,
-                                          symbol: symbol,
-                                          order_type: "Market",
+                                          side: is_valid_order_side!(side),
+                                          symbol: is_valid_currency_pair!(currency_pair),
+                                          order_type: is_valid_order_type!("Market"),
                                           qty: amount,
                                           time_in_force: timespan
                                         })
