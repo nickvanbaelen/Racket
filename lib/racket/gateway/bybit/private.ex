@@ -5,34 +5,34 @@ defmodule Racket.Gateway.ByBit.Private do
   import Racket.Utility.Time
 
   # INTERFACE IMPLEMENTATION
-  use Racket.Mixin.Gateway.Private
+  use Racket.Gateway.Mixin.Private
 
-  @impl Racket.Interface.Gateway.Private
+  @impl Racket.Gateway.Interface.Private
   def url, do: base_url()
 
   #TODO: Use Config to retrieve this value (https://hexdocs.pm/elixir/Config.html#content)
-  @impl Racket.Interface.Gateway.Private
+  @impl Racket.Gateway.Interface.Private
   def api_key, do: "YCPQDTAXIJPAirXYYz"
 
   #TODO: Use Config to retrieve this value (https://hexdocs.pm/elixir/Config.html#content)
-  @impl Racket.Interface.Gateway.Private
+  @impl Racket.Gateway.Interface.Private
   def private_key, do: "QPm8L8jqZBQ1oLyDgz5bS20hVkFflsM4JQO4"
 
-  @impl Racket.Interface.Gateway.Private
+  @impl Racket.Gateway.Interface.Private
   def account_balance(currency) do
     request("/v2/private/wallet/balance", %{coin: is_valid_currency!(currency)})
     |> Map.get("result")
     |> Map.get(currency)
   end
 
-  @impl Racket.Interface.Gateway.Private
+  @impl Racket.Gateway.Interface.Private
   def account_leverage do
     request("/user/leverage")
     |> Map.get("result")
   end
 
   #TODO: Use fspec instead of validating parameters in function code
-  @impl Racket.Interface.Gateway.Private
+  @impl Racket.Gateway.Interface.Private
   def account_leverage(currency_pair, amount) do
     submit("/user/leverage/save", %{
                                      symbol: is_valid_currency_pair!(currency_pair),
@@ -41,7 +41,7 @@ defmodule Racket.Gateway.ByBit.Private do
     |> Map.get("result")
   end
 
-  @impl Racket.Interface.Gateway.Private
+  @impl Racket.Gateway.Interface.Private
   def place_market_order(side, currency_pair, amount, timespan) do
     submit("/v2/private/order/create", %{
                                           side: is_valid_order_side!(side),

@@ -1,7 +1,7 @@
-defmodule Racket.Mixin.Gateway.Private do
+defmodule Racket.Gateway.Mixin.Private do
   defmacro __using__(_opts) do
     quote do
-      use Racket.Interface.Gateway.Private
+      use Racket.Gateway.Interface.Private
 
       @spec request(String.t, map()) :: map()
       defp request(endpoint, params \\ %{}) do

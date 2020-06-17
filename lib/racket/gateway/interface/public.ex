@@ -1,7 +1,7 @@
-defmodule Racket.Interface.Gateway.Public do
+defmodule Racket.Gateway.Interface.Public do
   defmacro __using__(_opts) do
     quote do
-      @behaviour Racket.Interface.Gateway.Public
+      @behaviour Racket.Gateway.Interface.Public
     end
   end
 
@@ -10,6 +10,7 @@ defmodule Racket.Interface.Gateway.Public do
   """
   @callback url :: String.t
 
+  #TODO: Remove this from the interface, move to ByBit private gateway implementation
   @doc """
   Returns the server time in milliseconds
   """

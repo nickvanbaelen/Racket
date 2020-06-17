@@ -1,7 +1,7 @@
 defmodule Racket.Gateway.ByBit.Public.Test do
   import Racket.Gateway.ByBit.Public
 
-  alias Racket.Interface.Gateway.Types.CurrencyPair
+  alias Racket.Gateway.Interface.Types.CurrencyPair
 
   use ExUnit.Case
 

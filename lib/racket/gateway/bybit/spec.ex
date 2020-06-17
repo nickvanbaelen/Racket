@@ -1,10 +1,10 @@
 defmodule Racket.Gateway.ByBit.Spec do
   import Racket.Utility.Math
 
-  alias Racket.Interface.Gateway.Types.Currency
-  alias Racket.Interface.Gateway.Types.CurrencyPair
-  alias Racket.Interface.Gateway.Types.OrderSide
-  alias Racket.Interface.Gateway.Types.OrderType
+  alias Racket.Gateway.Interface.Types.Currency
+  alias Racket.Gateway.Interface.Types.CurrencyPair
+  alias Racket.Gateway.Interface.Types.OrderSide
+  alias Racket.Gateway.Interface.Types.OrderType
 
   use Spec
 

@@ -1,7 +1,7 @@
-defmodule Racket.Mixin.Gateway.Public do
+defmodule Racket.Gateway.Mixin.Public do
   defmacro __using__(_opts) do
     quote do
-      use Racket.Interface.Gateway.Public
+      use Racket.Gateway.Interface.Public
 
       @spec request(String.t) :: map()
       defp request(endpoint) do

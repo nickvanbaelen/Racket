@@ -1,7 +1,7 @@
-defmodule Racket.Interface.Gateway do
+defmodule Racket.Gateway.Interface do
   defmacro __using__(_opts) do
     quote do
-      @behaviour Racket.Interface.Gateway
+      @behaviour Racket.Gateway.Interface
     end
   end
 

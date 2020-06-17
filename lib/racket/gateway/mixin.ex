@@ -1,7 +1,7 @@
-defmodule Racket.Mixin.Gateway do
+defmodule Racket.Gateway.Mixin do
   defmacro __using__(_opts) do
     quote do
-      use Racket.Interface.Gateway
+      use Racket.Gateway.Interface
 
       def handle_response!({ _, %{status_code: status_code, body: body} }) do
         { status_code, body }

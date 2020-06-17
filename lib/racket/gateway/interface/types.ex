@@ -1,4 +1,4 @@
-defmodule Racket.Interface.Gateway.Types do
+defmodule Racket.Gateway.Interface.Types do
   use EnumType
 
   defenum Currency do

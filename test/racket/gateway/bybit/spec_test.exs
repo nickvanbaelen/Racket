@@ -1,10 +1,10 @@
 defmodule Racket.Gateway.ByBit.Spec.Test do
   import Racket.Gateway.ByBit.Spec
 
-  alias Racket.Interface.Gateway.Types.Currency
-  alias Racket.Interface.Gateway.Types.CurrencyPair
-  alias Racket.Interface.Gateway.Types.OrderSide
-  alias Racket.Interface.Gateway.Types.OrderType
+  alias Racket.Gateway.Interface.Types.Currency
+  alias Racket.Gateway.Interface.Types.CurrencyPair
+  alias Racket.Gateway.Interface.Types.OrderSide
+  alias Racket.Gateway.Interface.Types.OrderType
 
   use ExUnit.Case
 

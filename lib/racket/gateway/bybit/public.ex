@@ -5,12 +5,12 @@ defmodule Racket.Gateway.ByBit.Public do
   import Racket.Utility.Spec
 
   # INTERFACE IMPLEMENTATION
-  use Racket.Mixin.Gateway.Public
+  use Racket.Gateway.Mixin.Public
 
-  @impl Racket.Interface.Gateway.Public
+  @impl Racket.Gateway.Interface.Public
   def url, do: base_url() <> "/v2/public"
 
-  @impl Racket.Interface.Gateway.Public
+  @impl Racket.Gateway.Interface.Public
   def timestamp do
     request("/time")
     |> Map.get("time_now")
@@ -19,7 +19,7 @@ defmodule Racket.Gateway.ByBit.Public do
     |> Kernel.trunc
   end
 
-  @impl Racket.Interface.Gateway.Public
+  @impl Racket.Gateway.Interface.Public
   def ticker(currency_pair) do
     request("/tickers", %{ symbol: is_valid_currency_pair!(currency_pair) })
     |> Map.get("result")
