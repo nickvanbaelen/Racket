@@ -23,7 +23,8 @@ defmodule Racket.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:enum_type, "~> 1.0"},
+      # {:enum_type, "~> 1.0"},
+      {:enum_type, git: "https://github.com/onboardingsystems/enum_type", tag: "v1.1.2"},
       {:httpoison, "~> 1.6"},
       {:poison, "~> 4.0"},
       {:spec, "~> 0.1"}
