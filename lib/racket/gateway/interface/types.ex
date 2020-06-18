@@ -10,10 +10,11 @@ defmodule Racket.Gateway.Interface.Types do
   end
 
   defenum CurrencyPair do
-    value BTCUSD, "BTCUSD"
-    value EOSUSD, "EOSUSD"
-    value ETHUSD, "ETHUSD"
-    value XRPUSD, "XRPUSD"
+    value BTCUSD,  "BTCUSD"
+    value EOSUSD,  "EOSUSD"
+    value ETHUSD,  "ETHUSD"
+    value XRPUSD,  "XRPUSD"
+    value BTCUSDT, "BTCUSDT"
   end
 
   defenum OrderSide do

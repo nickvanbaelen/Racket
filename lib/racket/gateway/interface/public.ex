@@ -13,6 +13,11 @@ defmodule Racket.Gateway.Interface.Public do
   @callback url :: String.t
 
   @doc """
+  Returns all available currency pairs and associated information
+  """
+  @callback available_currency_pairs() :: map()
+
+  @doc """
   Returns the ticker info for a specific currency pair
   """
   @callback ticker(CurrencyPair.t) :: map()

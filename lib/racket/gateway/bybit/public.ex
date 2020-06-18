@@ -9,6 +9,12 @@ defmodule Racket.Gateway.ByBit.Public do
   def url, do: base_url() <> "/v2/public"
 
   @impl Racket.Gateway.Interface.Public
+  def available_currency_pairs() do
+    request("/symbols")
+    |> Map.get("result")
+  end
+
+  @impl Racket.Gateway.Interface.Public
   def ticker(currency_pair) do
     request("/tickers", %{ symbol: currency_pair.value() })
     |> Map.get("result")
