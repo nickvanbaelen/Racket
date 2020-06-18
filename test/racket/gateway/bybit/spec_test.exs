@@ -8,6 +8,8 @@ defmodule Racket.Gateway.ByBit.Spec.Test do
 
   use ExUnit.Case
 
+  @moduletag :bybit
+
   doctest Racket.Gateway.ByBit.Spec
 
   describe "is_valid_currency" do

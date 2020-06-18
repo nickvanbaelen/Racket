@@ -5,8 +5,11 @@ defmodule Racket.Gateway.ByBit.Public.Test do
 
   use ExUnit.Case
 
+  @moduletag :bybit
+
   doctest Racket.Gateway.ByBit.Public
 
+  @tag :api
   test "timestamp" do
     import Racket.Utility.Time
 
@@ -17,6 +20,7 @@ defmodule Racket.Gateway.ByBit.Public.Test do
   end
 
   describe "ticker" do
+    @describetag :api
     for currency_pair <- CurrencyPair.values() do
       test "#{currency_pair}" do
         assert Map.get(ticker(unquote(currency_pair)), "symbol") == unquote(currency_pair)

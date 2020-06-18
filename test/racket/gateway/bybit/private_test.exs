@@ -4,14 +4,16 @@ defmodule Racket.Gateway.ByBit.Private.Test do
   use ExUnit.Case
   use Spec
 
+  alias Racket.Gateway.Interface.Types.Currency
+
+  @moduletag :bybit
+
   doctest Racket.Gateway.ByBit.Private
 
   describe "Retrieving user account balance" do
-    test "Invalid currency" do
-      assert_raise Spec.Mismatch, fn -> account_balance("XTZ") end
-    end
+    @describetag :api
 
-    for currency <- ["BTC", "ETH", "EOS", "XRP", "USDT"] do
+    for currency <- Currency.enums() do
       test "#{currency}" do
         assert Map.has_key?(account_balance(unquote(currency)), "wallet_balance")
       end
@@ -19,6 +21,8 @@ defmodule Racket.Gateway.ByBit.Private.Test do
   end
 
   describe "Setting user account leverage" do
+    @describetag :api
+
     test "Invalid symbol" do
       assert_raise Spec.Mismatch, fn -> account_leverage("XTZUSD", 1) end
     end
@@ -49,6 +53,8 @@ defmodule Racket.Gateway.ByBit.Private.Test do
   end
 
   describe "Placing a market order" do
+    @describetag :api
+
     #TODO: Create test with a market order than cannot be fulfilled, how to handle failure?
 
     test "BTCUSD market buy order" do
