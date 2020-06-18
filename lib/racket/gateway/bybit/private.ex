@@ -50,11 +50,24 @@ defmodule Racket.Gateway.ByBit.Private do
                                           qty: amount,
                                           time_in_force: expiration.value()
                                         })
-    |> decode_market_order()
+    |> decode_reply()
+  end
+
+  @impl Racket.Gateway.Interface.Private
+  def place_limit_order(side, currency_pair, price, amount, expiration) do
+    submit("/v2/private/order/create", %{
+                                          side: side.value(),
+                                          symbol: currency_pair.value(),
+                                          order_type: OrderType.LIMIT.value(),
+                                          price: is_valid_order_price!(price, currency_pair),
+                                          qty: amount,
+                                          time_in_force: expiration.value()
+                                        })
+    |> decode_reply()
   end
 
   # PRIVATE IMPLEMENTATION
-  @spec decode_market_order(map()) :: map()
-  defp decode_market_order(reply = %{ "ret_code" => 0 }), do: { :ok,    Map.get(reply, "result")   }
-  defp decode_market_order(reply)                       , do: { :error, Map.get(reply, "ret_code") }
+  @spec decode_reply(map()) :: map()
+  defp decode_reply(reply = %{ "ret_code" => 0 }), do: { :ok,    Map.get(reply, "result")   }
+  defp decode_reply(reply)                       , do: { :error, Map.get(reply, "ret_code") }
 end

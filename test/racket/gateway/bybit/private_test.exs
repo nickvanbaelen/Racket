@@ -54,15 +54,15 @@ defmodule Racket.Gateway.ByBit.Private.Test do
   describe "Placing a market order" do
     @describetag :api
 
-    test "Invalid - BTCUSD BUY" do
+    test "Invalid - BTCUSD BUY - Estimated buy liq_price cannot be higher than current mark_price" do
       assert { :error, 30022 } == place_market_order(OrderSide.BUY, CurrencyPair.BTCUSD, 1000000, OrderExpiration.IMMEDIATE_OR_CANCEL)
     end
 
-    test "Invalid BTCUSD SELL" do
+    test "Invalid - BTCUSD SELL - Estimated sell liq_price cannot be higher than current mark_price" do
       assert { :error, 30023 } == place_market_order(OrderSide.SELL, CurrencyPair.BTCUSD, 1000000, OrderExpiration.IMMEDIATE_OR_CANCEL)
     end
 
-    test "Valid BTCUSD BUY" do
+    test "BTCUSD BUY" do
       { :ok, order } = place_market_order(OrderSide.BUY, CurrencyPair.BTCUSD, 100, OrderExpiration.IMMEDIATE_OR_CANCEL)
 
       assert Map.has_key?(order, "order_id")
@@ -70,8 +70,37 @@ defmodule Racket.Gateway.ByBit.Private.Test do
       assert Map.get(order, "reject_reason") == ""
     end
 
-    test "Valid BTCUSD SELL" do
+    test "BTCUSD SELL" do
       { :ok, order } = place_market_order(OrderSide.SELL, CurrencyPair.BTCUSD, 100, OrderExpiration.IMMEDIATE_OR_CANCEL)
+
+      assert Map.has_key?(order, "order_id")
+      assert Map.get(order, "order_status") == "Created"
+      assert Map.get(order, "reject_reason") == ""
+    end
+  end
+
+  describe "Placing a limit order" do
+    @describetag :api
+    @describetag :limit
+
+    test "Invalid - BTCUSD BUY - Price exceeds minimum allowed" do
+      assert_raise Spec.Mismatch, fn -> place_limit_order(OrderSide.BUY, CurrencyPair.BTCUSD, 0, 1000.0, OrderExpiration.IMMEDIATE_OR_CANCEL) end
+    end
+
+    test "Invalid - BTCUSD SELL - Price exceeds maximum allowed" do
+      assert_raise Spec.Mismatch, fn -> place_limit_order(OrderSide.SELL, CurrencyPair.BTCUSD, 1000000, 1000.0, OrderExpiration.IMMEDIATE_OR_CANCEL) end
+    end
+
+    test "Valid - BTCUSD BUY" do
+      { :ok, order } = place_limit_order(OrderSide.BUY, CurrencyPair.BTCUSD, 3000.0, 100, OrderExpiration.IMMEDIATE_OR_CANCEL)
+
+      assert Map.has_key?(order, "order_id")
+      assert Map.get(order, "order_status") == "Created"
+      assert Map.get(order, "reject_reason") == ""
+    end
+
+    test "Valid - BTCUSD SELL" do
+      { :ok, order } = place_limit_order(OrderSide.SELL, CurrencyPair.BTCUSD, 20000.0, 100, OrderExpiration.IMMEDIATE_OR_CANCEL)
 
       assert Map.has_key?(order, "order_id")
       assert Map.get(order, "order_status") == "Created"

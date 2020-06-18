@@ -61,9 +61,8 @@ defmodule Racket.Gateway.Interface.Private do
   """
   @callback place_market_order(OrderSide.t(), CurrencyPair.t(), integer(), OrderExpiration.t) :: map()
 
-  # TODO
-  # @doc """
-  # Places a limit order on the specified currency pair
-  # """
-  # @callback place_order_limit(OrderSide.t(), CurrencyPair.t, integer(), integer(), String.t) :: map()
+  @doc """
+  Places a limit order on the specified currency pair
+  """
+  @callback place_limit_order(OrderSide.t(), CurrencyPair.t, integer(), float(), OrderExpiration.t) :: map()
 end

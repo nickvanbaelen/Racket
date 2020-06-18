@@ -23,4 +23,14 @@ defmodule Racket.Gateway.ByBit.Spec do
           false
       end)
   end
+
+  defspec is_valid_order_price(currency_pair) do
+    &(case currency_pair do
+      CurrencyPair.BTCUSD -> 0.5 <= &1 and &1 <= 999999.5 and &1 |> is_divisble_by(0.5)
+      CurrencyPair.ETHUSD -> 0.05 <= &1 and &1 <= 99999.95 and &1 |> is_divisble_by(0.05)
+      CurrencyPair.EOSUSD -> 0.001 <= &1 and &1 <= 1999.999 and &1 |> is_divisble_by(0.001)
+      CurrencyPair.XRPUSD -> 0.0001 <= &1 and &1 <= 199.9999 and &1 |> is_divisble_by(0.0001)
+      _ -> false
+    end)
+  end
 end
