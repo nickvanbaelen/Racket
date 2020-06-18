@@ -21,9 +21,9 @@ defmodule Racket.Gateway.ByBit.Public.Test do
 
   describe "ticker" do
     @describetag :api
-    for currency_pair <- CurrencyPair.values() do
+    for currency_pair <- CurrencyPair.enums() do
       test "#{currency_pair}" do
-        assert Map.get(ticker(unquote(currency_pair)), "symbol") == unquote(currency_pair)
+        assert Map.get(ticker(unquote(currency_pair)), "symbol") == unquote(currency_pair.value())
       end
     end
   end

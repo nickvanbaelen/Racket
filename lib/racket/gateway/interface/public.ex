@@ -5,6 +5,8 @@ defmodule Racket.Gateway.Interface.Public do
     end
   end
 
+  alias Racket.Gateway.Interface.Types.CurrencyPair
+
   @doc """
   Url pointing to the public part of the API
   """
@@ -19,5 +21,5 @@ defmodule Racket.Gateway.Interface.Public do
   @doc """
   Returns the ticker info for a specific currency pair
   """
-  @callback ticker(String.t) :: map()
+  @callback ticker(CurrencyPair.t) :: map()
 end

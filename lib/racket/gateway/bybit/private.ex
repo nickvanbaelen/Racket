@@ -4,6 +4,8 @@ defmodule Racket.Gateway.ByBit.Private do
   import Racket.Utility.Signing
   import Racket.Utility.Time
 
+  alias Racket.Gateway.Interface.Types.OrderType
+
   # INTERFACE IMPLEMENTATION
   use Racket.Gateway.Mixin.Private
 
@@ -20,9 +22,9 @@ defmodule Racket.Gateway.ByBit.Private do
 
   @impl Racket.Gateway.Interface.Private
   def account_balance(currency) do
-    request("/v2/private/wallet/balance", %{coin: is_valid_currency!(currency)})
+    request("/v2/private/wallet/balance", %{coin: currency.value()})
     |> Map.get("result")
-    |> Map.get(currency)
+    |> Map.get(currency.value())
   end
 
   @impl Racket.Gateway.Interface.Private
@@ -35,20 +37,20 @@ defmodule Racket.Gateway.ByBit.Private do
   @impl Racket.Gateway.Interface.Private
   def account_leverage(currency_pair, amount) do
     submit("/user/leverage/save", %{
-                                     symbol: is_valid_currency_pair!(currency_pair),
+                                     symbol: currency_pair.value(),
                                      leverage: is_valid_leverage!(amount, currency_pair)
                                    })
     |> Map.get("result")
   end
 
   @impl Racket.Gateway.Interface.Private
-  def place_market_order(side, currency_pair, amount, timespan) do
+  def place_market_order(side, currency_pair, amount, expiration) do
     submit("/v2/private/order/create", %{
-                                          side: is_valid_order_side!(side),
-                                          symbol: is_valid_currency_pair!(currency_pair),
-                                          order_type: is_valid_order_type!("Market"),
+                                          side: side.value(),
+                                          symbol: currency_pair.value(),
+                                          order_type: OrderType.MARKET.value(),
                                           qty: amount,
-                                          time_in_force: timespan
+                                          time_in_force: expiration.value()
                                         })
     |> Map.get("result")
   end

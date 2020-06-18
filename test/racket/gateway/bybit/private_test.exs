@@ -5,6 +5,9 @@ defmodule Racket.Gateway.ByBit.Private.Test do
   use Spec
 
   alias Racket.Gateway.Interface.Types.Currency
+  alias Racket.Gateway.Interface.Types.CurrencyPair
+  alias Racket.Gateway.Interface.Types.OrderExpiration
+  alias Racket.Gateway.Interface.Types.OrderSide
 
   @moduletag :bybit
 
@@ -23,26 +26,22 @@ defmodule Racket.Gateway.ByBit.Private.Test do
   describe "Setting user account leverage" do
     @describetag :api
 
-    test "Invalid symbol" do
-      assert_raise Spec.Mismatch, fn -> account_leverage("XTZUSD", 1) end
-    end
-
     test "Invalid amount" do
-      assert_raise Spec.Mismatch, fn -> account_leverage("BTCUSD", 200) end
+      assert_raise Spec.Mismatch, fn -> account_leverage(CurrencyPair.BTCUSD, 200) end
     end
 
-    test "Valid symbols and amounts" do
-      account_leverage("BTCUSD", 1)
-      account_leverage("EOSUSD", 10)
-      account_leverage("ETHUSD", 23.51)
-      account_leverage("XRPUSD", 50.0)
+    test "Valid amounts" do
+      account_leverage(CurrencyPair.BTCUSD, 1)
+      account_leverage(CurrencyPair.EOSUSD, 10)
+      account_leverage(CurrencyPair.ETHUSD, 23.51)
+      account_leverage(CurrencyPair.XRPUSD, 50.0)
 
       leverage = account_leverage()
 
-      assert leverage |> Map.get("BTCUSD") |> Map.get("leverage") == 1
-      assert leverage |> Map.get("EOSUSD") |> Map.get("leverage") == 10
-      assert leverage |> Map.get("ETHUSD") |> Map.get("leverage") == 23.51
-      assert leverage |> Map.get("XRPUSD") |> Map.get("leverage") == 50.0
+      assert leverage |> Map.get(CurrencyPair.BTCUSD.value()) |> Map.get("leverage") == 1
+      assert leverage |> Map.get(CurrencyPair.EOSUSD.value()) |> Map.get("leverage") == 10
+      assert leverage |> Map.get(CurrencyPair.ETHUSD.value()) |> Map.get("leverage") == 23.51
+      assert leverage |> Map.get(CurrencyPair.XRPUSD.value()) |> Map.get("leverage") == 50.0
     end
 
     #TODO: Fix; this seems like a bug in the API, because ByBit web UI shows this as "cross"
@@ -58,7 +57,7 @@ defmodule Racket.Gateway.ByBit.Private.Test do
     #TODO: Create test with a market order than cannot be fulfilled, how to handle failure?
 
     test "BTCUSD market buy order" do
-      order = place_market_order("Buy", "BTCUSD", 100, "ImmediateOrCancel")
+      order = place_market_order(OrderSide.BUY, CurrencyPair.BTCUSD, 100, OrderExpiration.IMMEDIATE_OR_CANCEL)
 
       assert Map.has_key?(order, "order_id")
       assert Map.get(order, "order_status") == "Created"
@@ -66,7 +65,7 @@ defmodule Racket.Gateway.ByBit.Private.Test do
     end
 
     test "BTCUSD market sell order" do
-      order = place_market_order("Sell", "BTCUSD", 100, "ImmediateOrCancel")
+      order = place_market_order(OrderSide.SELL, CurrencyPair.BTCUSD, 100, OrderExpiration.IMMEDIATE_OR_CANCEL)
 
       assert Map.has_key?(order, "order_id")
       assert Map.get(order, "order_status") == "Created"
