@@ -54,18 +54,24 @@ defmodule Racket.Gateway.ByBit.Private.Test do
   describe "Placing a market order" do
     @describetag :api
 
-    #TODO: Create test with a market order than cannot be fulfilled, how to handle failure?
+    test "Invalid - BTCUSD BUY" do
+      assert { :error, 30022 } == place_market_order(OrderSide.BUY, CurrencyPair.BTCUSD, 1000000, OrderExpiration.IMMEDIATE_OR_CANCEL)
+    end
 
-    test "BTCUSD market buy order" do
-      order = place_market_order(OrderSide.BUY, CurrencyPair.BTCUSD, 100, OrderExpiration.IMMEDIATE_OR_CANCEL)
+    test "Invalid BTCUSD SELL" do
+      assert { :error, 30023 } == place_market_order(OrderSide.SELL, CurrencyPair.BTCUSD, 1000000, OrderExpiration.IMMEDIATE_OR_CANCEL)
+    end
+
+    test "Valid BTCUSD BUY" do
+      { :ok, order } = place_market_order(OrderSide.BUY, CurrencyPair.BTCUSD, 100, OrderExpiration.IMMEDIATE_OR_CANCEL)
 
       assert Map.has_key?(order, "order_id")
       assert Map.get(order, "order_status") == "Created"
       assert Map.get(order, "reject_reason") == ""
     end
 
-    test "BTCUSD market sell order" do
-      order = place_market_order(OrderSide.SELL, CurrencyPair.BTCUSD, 100, OrderExpiration.IMMEDIATE_OR_CANCEL)
+    test "Valid BTCUSD SELL" do
+      { :ok, order } = place_market_order(OrderSide.SELL, CurrencyPair.BTCUSD, 100, OrderExpiration.IMMEDIATE_OR_CANCEL)
 
       assert Map.has_key?(order, "order_id")
       assert Map.get(order, "order_status") == "Created"
