@@ -12,13 +12,11 @@ defmodule Racket.Gateway.ByBit.Private do
   @impl Racket.Gateway.Interface.Private
   def url, do: base_url()
 
-  #TODO: Use Config to retrieve this value (https://hexdocs.pm/elixir/Config.html#content)
   @impl Racket.Gateway.Interface.Private
-  def api_key, do: "YCPQDTAXIJPAirXYYz"
+  def api_key, do: Application.fetch_env!(:racket, :bybit)[:api_key]
 
-  #TODO: Use Config to retrieve this value (https://hexdocs.pm/elixir/Config.html#content)
   @impl Racket.Gateway.Interface.Private
-  def private_key, do: "QPm8L8jqZBQ1oLyDgz5bS20hVkFflsM4JQO4"
+  def private_key, do: Application.fetch_env!(:racket, :bybit)[:private_key]
 
   @impl Racket.Gateway.Interface.Private
   def account_balance(currency) do
